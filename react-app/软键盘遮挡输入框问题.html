@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<input type="text" />
+<script>
+{
+    let input = document.querySelector("input");
+    let oldY = 0;
+    input.onfocus = ()=>{
+// 开始input框距离顶部的距离
+
+        let startTop = input.getBoundingClientRect().top;
+        setTimeout(()=>{
+// 软键盘距离顶部的距离
+            let nowTop = input.getBoundingClientRect().top;
+            if(startTop - nowTop > 10){
+                return;
+            }
+            if(nowTop > window.innerHeight/2){
+                oldY = nowTop -  window.innerHeight/2 - input.offsetHeight - 10;
+/*
+移动距离是当前软键盘浮上来减去可视区高度一半减去输入框偏移高度减去10,是的软键盘一直保持在输入框高度和一半可视区下
+*/                   
+                input.style.transform = "translateY(-"+oldY+"px)"; }
+        },400);
+    };
+    input.onblur = ()=>{
+        if(oldY){
+            input.style.transform = "translateY("+0+"px)";
+        } };}
+
+</script>    
+</body>
+</html>
